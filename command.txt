@@ -1,0 +1,12 @@
+command
+takeoff
+delay 5
+land
+
+
+420
+45
+
+45
+
+

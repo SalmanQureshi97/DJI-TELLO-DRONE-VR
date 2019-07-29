@@ -28,7 +28,7 @@ def recognize_speech_from_mic(recognizer, microphone):
     # adjust the recognizer sensitivity to ambient noise and record audio
     # from the microphone
     with microphone as source:
-        recognizer.adjust_for_ambient_noise(source,duration=0.25)
+        recognizer.adjust_for_ambient_noise(source,duration=0.5)
         audio = recognizer.listen(source)
 
     # set up the response object
@@ -42,7 +42,7 @@ def recognize_speech_from_mic(recognizer, microphone):
     # if a RequestError or UnknownValueError exception is caught,
     #     update the response object accordingly
     try:
-        response["transcription"] = recognizer.recognize_google(audio,language = "en-IN")
+        response["transcription"] = recognizer.recognize_google(audio)
     except sr.RequestError:
         # API was unreachable or unresponsive
         response["success"] = False
@@ -85,16 +85,17 @@ for command in commands:
             print(command)
             tello.send_command(command)
 
-w = open(file_name, "w")
+w = open(file_name, "a")
+w.write("\n")
 
-
+breaker = 1
 while True:
         print ('delay to wait for Voice Recognition')
         time.sleep(5)
         print("SPEAK IN 2 SEC")
         VRcommand = recognize_speech_from_mic(recognizer, microphone)
         print("You said: {}".format(VRcommand["transcription"]))
-        print("You said: {}".format(VRcommand["error"]))
+        print("API returns: {}".format(VRcommand["error"]))
 
 
         #Final_Command = command["transcription"]
@@ -105,45 +106,67 @@ while True:
         #identifies Command
 
         for word in (com_list):
-            print(i)
             if(com_list[i] == "forward" or com_list[i] == "four word" or com_list[i] == "forwards"):
-                command += "forward "
+                w.write("forward ")
+                command += "forward"
                 i=i+1
             elif (com_list[i] == "back" or com_list[i] == "backwards" or com_list[i] == "backward"):
                 w.write("back ")
+                command += "back"
                 i=i+1
             elif (com_list[i] == "left"):
                 w.write("left ")
+                command += "left"
                 i=i+1
             elif (com_list[i] == "right" or com_list[i] == "bright" or com_list[i] == "write" ):
                 w.write("right ")
+                command += "right"
                 i=i+1
             elif (com_list[i] == "elevate" or com_list[i].endswith("ate")):
                 w.write("up ")
+                command += "up"
                 i=i+1
             elif (com_list[i] == "down" or com_list[i].endswith("own") or com_list[i].endswith("ound")):
                 w.write("down ")
+                command += "down"
                 i=i+1
             elif (com_list[i] == "land"):
                 w.write("land ")
+                command += "land"
+                i=i+1
+            elif (com_list[i] == "flip"):
+                w.write("flip ")
+                command += "flip"
                 i=i+1
             else:
                 print("Incorrect Command")
+                breaker = 0
                 i=i+1
 
             #identifies magnitude
 
         i = 0
         for word in (com_list):
-            print("Magnitude of Command to be WRITTEN TO FILE")
             if(com_list[i].isdigit()):
-                print("Magnitude of Command to be WRITTEN TO FILE")
+                print("Magnitude of Command Provided")
+                w.write(com_list[i])
+                command += " "
                 command += com_list[i]
             else:
+                print("No Magnitude Provided, Default Set")
                 i = i + 1
-         
-        tello.send_command(command)
 
-        if command == "land":
-            break;
+
+
+        if(command == "land"):
+            print("Command = %s" % command)
+            tello.send_command(command)
+            break 
+        if(breaker == 1 and command != "land"):
+            print("Command = %s" % command)
+            tello.send_command(command)
+        else:
+            print("Command Not Registered")
+
+        w.write("\n")
 exit()

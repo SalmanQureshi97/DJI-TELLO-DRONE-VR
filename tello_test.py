@@ -91,7 +91,7 @@ w.write("\n")
 breaker = 1
 while True:
         print ('delay to wait for Voice Recognition')
-        time.sleep(5)
+        time.sleep(1)
         print("SPEAK IN 2 SEC")
         VRcommand = recognize_speech_from_mic(recognizer, microphone)
         print("You said: {}".format(VRcommand["transcription"]))
@@ -107,36 +107,36 @@ while True:
 
         for word in (com_list):
             if(com_list[i] == "forward" or com_list[i] == "four word" or com_list[i] == "forwards"):
-                w.write("forward ")
-                command += "forward"
+                w.write("forward 100")
+                command += "forward 100"
                 i=i+1
             elif (com_list[i] == "back" or com_list[i] == "backwards" or com_list[i] == "backward"):
-                w.write("back ")
-                command += "back"
+                w.write("back 100")
+                command += "back 100"
                 i=i+1
             elif (com_list[i] == "left"):
-                w.write("left ")
-                command += "left"
+                w.write("left 100")
+                command += "left 100"
                 i=i+1
             elif (com_list[i] == "right" or com_list[i] == "bright" or com_list[i] == "write" ):
-                w.write("right ")
-                command += "right"
+                w.write("right 100")
+                command += "right 100"
                 i=i+1
             elif (com_list[i] == "elevate" or com_list[i].endswith("ate")):
-                w.write("up ")
-                command += "up"
+                w.write("up 100")
+                command += "up 100"
                 i=i+1
             elif (com_list[i] == "down" or com_list[i].endswith("own") or com_list[i].endswith("ound")):
-                w.write("down ")
-                command += "down"
+                w.write("down 100")
+                command += "down 100"
                 i=i+1
             elif (com_list[i] == "land"):
-                w.write("land ")
-                command += "land"
+                w.write("land 100")
+                command += "land 100"
                 i=i+1
             elif (com_list[i] == "flip"):
-                w.write("flip ")
-                command += "flip"
+                w.write("flip r")
+                command += "flip r"
                 i=i+1
             else:
                 print("Incorrect Command")
@@ -144,17 +144,16 @@ while True:
                 i=i+1
 
             #identifies magnitude
-
-        i = 0
-        for word in (com_list):
-            if(com_list[i].isdigit()):
-                print("Magnitude of Command Provided")
-                w.write(com_list[i])
-                command += " "
-                command += com_list[i]
-            else:
-                print("No Magnitude Provided, Default Set")
-                i = i + 1
+    #    i = 0
+     #   for word in (com_list):
+      #      if(com_list[i].isdigit()):
+       #         print("Magnitude of Command Provided")
+        #        w.write(com_list[i])
+         #       command += " "
+          #      command += com_list[i]
+           # else:
+            #    print("No Magnitude Provided, Default Set")
+             #   i = i + 1
 
 
 

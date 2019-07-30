@@ -1,8 +1,11 @@
 # Tello_Drone_Voice_Rec
 ## Dependencies
 Pyaudio
+
 librosa
+
 SpeechRecognition
+
 A router for mutliple wifi access
 #
 Write the default command set to be run in command.txt, for example:：

@@ -20,7 +20,6 @@ delay 5
 Run the script
 ```
 python tello_test.py 
-```
 The command window will type each instruction and its reply. After the execution is finished, the commands will be stored in the log folder to name the test end time.
 ```
 ## Step 4
